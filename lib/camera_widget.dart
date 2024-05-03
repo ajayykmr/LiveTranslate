@@ -25,6 +25,7 @@ class _CameraWidgetState extends State<CameraWidget> {
     cameraController = CameraController(
       widget.camera,
       ResolutionPreset.max,
+
     );
 
     initCameraFn = cameraController.initialize();
@@ -48,17 +49,15 @@ class _CameraWidgetState extends State<CameraWidget> {
             );
           }
 
-          return SizedBox(
-            height: double.infinity,
-            width: double.infinity,
-            child: CameraPreview(cameraController),
-          );
+          return Center(child: CameraPreview(cameraController));
+
         },
       ),
       Positioned(
         bottom: 50,
         child: FloatingActionButton(
           onPressed: () async {
+            shownText=null;
             final image = await cameraController.takePicture();
             final recognizedText = await RecognitionApi.recognizeText(
                 InputImage.fromFile(File(image.path)));
